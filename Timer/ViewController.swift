@@ -74,6 +74,10 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             startButtonOutlet.setTitle("Lap", forState: UIControlState.Normal)
             let noImage = UIImage()
             startButtonOutlet.setImage(noImage, forState: UIControlState.Normal)
+            
+            //change clear button to stop button
+            stopButtonOutlet.setImage(UIImage(named: "stop"), forState: UIControlState.Normal)
+            stopButtonOutlet.setTitle("", forState: UIControlState.Normal)
         }
         else if timer == nil && stopBool
         {
@@ -86,6 +90,10 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             startButtonOutlet.setTitle("Lap", forState: UIControlState.Normal)
             let noImage = UIImage()
             startButtonOutlet.setImage(noImage, forState: UIControlState.Normal)
+            
+            //change clear button to stop button
+            stopButtonOutlet.setImage(UIImage(named: "stop"), forState: UIControlState.Normal)
+            stopButtonOutlet.setTitle("", forState: UIControlState.Normal)
         }
         else
         {
@@ -100,8 +108,9 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     @IBAction func stopButton()
     {
-        if timer != nil
+        if timer != nil && !stopBool
         {
+            // if timer running, they stopped the timer
             timer = nil
             stopBool = true
             
@@ -111,6 +120,25 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             //change start button to lap button
             startButtonOutlet.setImage(UIImage(named: "start")!, forState: UIControlState.Normal)
             startButtonOutlet.setTitle("", forState: UIControlState.Normal)
+            
+            //change stop button to clear button 
+            stopButtonOutlet.setImage(UIImage(), forState: UIControlState.Normal)
+            stopButtonOutlet.setTitle("Clear", forState: UIControlState.Normal)
+        }
+        else if timer == nil && stopBool
+        {
+            // if timer stopped, they cleared timer
+            // reset everything....... Lord Zeroth Returns!!
+            timer = nil
+            stopBool = false
+            timeLabel.text = "0:00:00.00"
+            self.laps = []
+            self.lapNumber = 0
+            self.tableView.reloadData()
+            
+            //change clear button to stop button
+            stopButtonOutlet.setImage(UIImage(named: "stop"), forState: UIControlState.Normal)
+            stopButtonOutlet.setTitle("", forState: UIControlState.Normal)
             
         }
     }
